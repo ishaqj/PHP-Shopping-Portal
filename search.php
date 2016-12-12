@@ -18,30 +18,32 @@ $products->setName($q);
 $products->searchProduct();
 $searched_products = $products->getSearchedProducts();
 ?>
-<div class="row">
+    <div class="row">
     <div class="page-header">
-        <h1>Sökresultat för: <?=$q?></h1>
+        <h1>Sökresultat för: <?= $q ?></h1>
     </div>
     <div class="message"></div>
-    <?php if(!empty($searched_products)): ?>
-    <?php foreach($searched_products as $product) : ?>
-    <?php extract($product);?>
-    <?=$products->setId($id)?>
-    <div class="col-xs-6 col-sm-6 col-md-3">
-        <div class="panel panel-primary">
+<?php if (!empty($searched_products)): ?>
+    <?php foreach ($searched_products as $product) : ?>
+        <?php extract($product); ?>
+        <?= $products->setId($id) ?>
+        <div class="col-xs-6 col-sm-6 col-md-3">
+            <div class="panel panel-primary">
 
-                <div class="panel-heading"><?=$cat_name?></div>
-                <div class="panel-body"><a href="product.php?id=<?=$id?>"><img src=<?=$products->fetchImage()->image?> class="img-responsive" style="width:100%" alt="<?=$name?>age"></a></div>
+                <div class="panel-heading"><?= $cat_name ?></div>
+                <div class="panel-body"><a href="product.php?id=<?= $id ?>"><img
+                            src=<?= $products->fetchImage()->image ?> class="img-responsive" style="width:100%"
+                            alt="<?= $name ?>age"></a></div>
                 <div class="panel-footer text-center">
-                    <p class="title"><a href="product.php?id=<?=$id?>"><?=$name?></a></p>
-                    <p class="price"><?=$price?> kr</p>
+                    <p class="title"><a href="product.php?id=<?= $id ?>"><?= $name ?></a></p>
+                    <p class="price"><?= $price ?> kr</p>
                 </div>
+            </div>
         </div>
-    </div>
-        <?php endforeach; ?>
-         <?php else : ?>
-         <div class="col-md-12"><p>Din sökning efter <b><?=$q?></b> gav tyvärr inga träffar.</p></div>
-         <?php endif; ?>
+    <?php endforeach; ?>
+<?php else : ?>
+    <div class="col-md-12"><p>Din sökning efter <b><?= $q ?></b> gav tyvärr inga träffar.</p></div>
+<?php endif; ?>
 
 <?php
 include_once 'views/footer.php';

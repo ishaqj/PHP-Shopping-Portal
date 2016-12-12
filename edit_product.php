@@ -26,7 +26,7 @@ $category->getCategory();
 $product->stock();
 
 
-if(isset($_POST["submit"])) {
+if (isset($_POST["submit"])) {
 
 
     $product->setName($_POST['name']);
@@ -47,75 +47,73 @@ if(isset($_POST["submit"])) {
     header('Location: admin.php');
 }
 ?>
-<div class="page-header">
-    <h1>Ändra - <?=$product->getName()?></h1>
-</div>
+    <div class="page-header">
+        <h1>Ändra - <?= $product->getName() ?></h1>
+    </div>
     <form action="" method='post'>
 
         <table class='table table-hover table-responsive table-bordered'>
 
-        <tr>
-            <td>Name</td>
-            <td><input type='text' value="<?=$product->getName()?>" name='name' class='form-control' />
-            </td>
-        </tr>
-        <?php foreach ($product->getImages() as $i => $image) : ?>
-        <tr>
-            <td>Image <?=$i?></td>
-            <td>
-                <input type='text' value="<?=$image->image?>" name='image[]' class='form-control' />
-                <input type='hidden' value="<?=$image->id?>" name='id[]'>
-            </td>
-        </tr>
-    <?php endforeach; ?>
-            
-        <tr>
-            <td>Price</td>
-            <td>
-                <input type='text' value="<?=$product->getPrice()?>" name='price' class='form-control' />
-            </td>
-        </tr>
+            <tr>
+                <td>Name</td>
+                <td><input type='text' value="<?= $product->getName() ?>" name='name' class='form-control'/>
+                </td>
+            </tr>
+            <?php foreach ($product->getImages() as $i => $image) : ?>
+                <tr>
+                    <td>Image <?= $i ?></td>
+                    <td>
+                        <input type='text' value="<?= $image->image ?>" name='image[]' class='form-control'/>
+                        <input type='hidden' value="<?= $image->id ?>" name='id[]'>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
 
-        <tr>
-            <td>Description</td>
-            <td><textarea rows="15" cols="50" value="<?=$product->getDescription()?>" name='description' class='form-control'> <?=$product->getDescription()?></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>Stock</td>
-            <td>
-                <input type='number' name='stock' value="<?=$product->getStock()?>" class='form-control' />
-            </td>
-        </tr>
-        <tr>
-            <td>Category</td>
-            <td>
-                <?php
-                $categories = $category->getAllCategories();
+            <tr>
+                <td>Price</td>
+                <td>
+                    <input type='text' value="<?= $product->getPrice() ?>" name='price' class='form-control'/>
+                </td>
+            </tr>
 
-                echo "<select class='form-control' name='category_id'>";
-                foreach($categories as $cat) {
-                    if($category->getId() == $cat->id)
-                    {
-                        echo "<option value='{$cat->id}' selected>$cat->cat_name</option>";
+            <tr>
+                <td>Description</td>
+                <td><textarea rows="15" cols="50" value="<?= $product->getDescription() ?>" name='description'
+                              class='form-control'> <?= $product->getDescription() ?></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>Stock</td>
+                <td>
+                    <input type='number' name='stock' value="<?= $product->getStock() ?>" class='form-control'/>
+                </td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>
+                    <?php
+                    $categories = $category->getAllCategories();
+
+                    echo "<select class='form-control' name='category_id'>";
+                    foreach ($categories as $cat) {
+                        if ($category->getId() == $cat->id) {
+                            echo "<option value='{$cat->id}' selected>$cat->cat_name</option>";
+                        } else {
+                            echo "<option value='{$cat->id}'>$cat->cat_name</option>";
+                        }
+
                     }
+                    echo "</select>";
+                    ?>
+                </td>
+            </tr>
 
-                    else {
-                        echo "<option value='{$cat->id}'>$cat->cat_name</option>";
-                    }
-
-                }
-                echo "</select>";
-                 ?>
-            </td>
-        </tr>
-
-        <tr>
-            <td></td>
-            <td>
-                <button name="submit" type="submit" class="btn btn-primary">Update</button>
-            </td>
-        </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button name="submit" type="submit" class="btn btn-primary">Update</button>
+                </td>
+            </tr>
 
         </table>
     </form>

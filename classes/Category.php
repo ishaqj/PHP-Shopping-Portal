@@ -10,34 +10,37 @@ class Category extends Products
 {
     private $db;
     private $categoryTable = "categories";
-    
+
     private $id;
     private $name;
-    
-    public function __construct(Database $db) {
-    $this->db =  $db;
-}
-    public function getCategory() {
-       $result = $this->db->fetch("SELECT 
+
+    public function __construct(Database $db)
+    {
+        $this->db = $db;
+    }
+
+    public function getCategory()
+    {
+        $result = $this->db->fetch("SELECT 
                                     cat_name 
                                    FROM  
                                     {$this->categoryTable} 
                                    WHERE 
-                                    id = ?", 
-                                    array($this->id));
-        
+                                    id = ?",
+            array($this->id));
+
         $this->name = $result->cat_name;
     }
 
-    public function getAllCategories() {
+    public function getAllCategories()
+    {
         $sql = "SELECT 
                   id,cat_name 
                 FROM {$this->categoryTable}";
-        
+
         $result = $this->db->query($sql);
         return $result;
     }
-    
 
 
     /**
@@ -71,5 +74,5 @@ class Category extends Products
     {
         return $this->id;
     }
-    
+
 }

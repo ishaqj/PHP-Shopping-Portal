@@ -7,10 +7,10 @@
     <div class="page-header">Varukorg
     </div>
     <ul>
-        
+
     </ul>
 </div>
-<div class="toggled col-md-2 text-center">Varukorg (<?= $cart->cartItems();?>)</div>
+<div class="toggled col-md-2 text-center">Varukorg (<?= $cart->cartItems(); ?>)</div>
 <br><br>
 <footer class="container-fluid text-center">
     <p>Online Store Copyright</p>

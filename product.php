@@ -8,7 +8,7 @@
 include_once 'config.php';
 $id = isset($_GET['id']) && is_numeric($_GET['id']) ? htmlspecialchars(strip_tags($_GET['id'])) : "not numeric";
 
-if(is_numeric($id) && !empty($id)) {
+if (is_numeric($id) && !empty($id)) {
 
     // GET PRODUCT
     $product = new Products($db);
@@ -25,12 +25,11 @@ if(is_numeric($id) && !empty($id)) {
     $category->setId($product->getCategoryId());
     $category->getCategory();
 
-    
+
     // INCLUDE PRODUCT TEMPLATE FILE AND FOOTER
     include 'views/product-detail.php';
     include_once 'views/footer.php';
-}
-else {
+} else {
     echo "<p>Nothing to show here, <a href='index.php'>Go Back</a></p>";
 }
 

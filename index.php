@@ -30,7 +30,7 @@ $from_record_num = ($records_per_page * $page) - $records_per_page;
 // Total rows from db
 $total_rows = $products->productRowCount($category_id);
 
-$showAllProducts = $products->showAllProducts($category_id,$from_record_num,$records_per_page);
+$showAllProducts = $products->showAllProducts($category_id, $from_record_num, $records_per_page);
 include_once 'views/product-list.php';
 
 include_once 'views/footer.php';

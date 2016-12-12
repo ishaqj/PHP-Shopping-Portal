@@ -7,7 +7,7 @@
  */
 include_once 'config.php';
 $cart = new Cart($db);
-$page_title="Produkter";
+$page_title = "Produkter";
 include_once 'views/header.php';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 $category_id = isset($_GET['id']) ? htmlspecialchars(strip_tags($_GET['id'])) : null;
@@ -31,7 +31,7 @@ $from_record_num = ($records_per_page * $page) - $records_per_page;
 // Total rows from db
 $total_rows = $products->productRowCount($category->getId());
 
-$showAllProducts = $products->showAllProducts($category->getId(),$from_record_num,$records_per_page);
+$showAllProducts = $products->showAllProducts($category->getId(), $from_record_num, $records_per_page);
 
 include_once 'views/product-list.php';
 include_once 'views/footer.php';

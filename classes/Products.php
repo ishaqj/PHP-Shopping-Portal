@@ -1,51 +1,54 @@
 <?php
 
-class Products extends FlashMessage {
+class Products extends FlashMessage
+{
 
     /**
-	 * Products Class for displaying products.
-	 *
-	 * @author Ishaq Jound
-	 **/
+     * Products Class for displaying products.
+     *
+     * @author Ishaq Jound
+     **/
 
-	/**
-	 * Properties
-	 *
-	 **/
-	private $db;
-	private $product_table = "products";
-    
+    /**
+     * Properties
+     *
+     **/
+    private $db;
+    private $product_table = "products";
+
     private $id;
-	private $name;
+    private $name;
     private $description;
-	private $price;
+    private $price;
     private $created_at;
     private $updated_at;
-	private $category_id;
+    private $category_id;
 
     private $images = [];
     private $img_id;
 
     private $stock;
     private $stock_id;
-    
+
     private $searchedProducts = [];
 
-	/**
-	 * Sets $db to a database connection upon class instantiation
-	 *
-	 * @param object $db
-	 * 
-	 * @return void
-	 * @author Ishaq Jound 
-	 **/
-	public function __construct($db) {
-		$this->db = $db;
-	}
+    /**
+     * Sets $db to a database connection upon class instantiation
+     *
+     * @param object $db
+     *
+     * @return void
+     * @author Ishaq Jound
+     **/
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
 
-    public function create() {
+    public function create()
+    {
         $product = [
-          $this->name = htmlspecialchars(strip_tags($this->name)),
+            $this->name = htmlspecialchars(strip_tags($this->name)),
             $this->description = htmlspecialchars($this->description),
             $this->created_at,
             $this->price = htmlspecialchars(strip_tags($this->price)),
@@ -58,7 +61,7 @@ class Products extends FlashMessage {
                   (name,description,created_at,price,category_id)
                 VALUES(?,?,?,?,?)";
 
-        $this->db->insert($sql,$product);
+        $this->db->insert($sql, $product);
 
         //GET LAST INSERTED ID
         $product_id = $this->db->lastInsertId();
@@ -69,19 +72,20 @@ class Products extends FlashMessage {
                 VALUES(?,?)";
 
         $stock = htmlspecialchars(strip_tags($this->stock));
-        $this->db->insert($sql,[$product_id,$stock]);
+        $this->db->insert($sql, [$product_id, $stock]);
 
         //INSERT IMAGES
         $sql = "INSERT INTO 
                   images (image, product_id) 
                 VALUES(?,?)";
         foreach ($this->images as $image) {
-            
-            $this->db->insert($sql,[$image,$product_id]);
+
+            $this->db->insert($sql, [$image, $product_id]);
         }
     }
-    
-    public function update() {
+
+    public function update()
+    {
 
         $product = [
             $this->name = htmlspecialchars(strip_tags($this->name)),
@@ -100,7 +104,7 @@ class Products extends FlashMessage {
                 WHERE 
                   id = ?";
 
-        $this->db->update($sql,$product);
+        $this->db->update($sql, $product);
 
         // product stock
         $sql = "UPDATE 
@@ -112,7 +116,7 @@ class Products extends FlashMessage {
                 ";
 
         $this->stock = htmlspecialchars(strip_tags($this->stock));
-        $this->db->update($sql,[$this->stock, $this->id]);
+        $this->db->update($sql, [$this->stock, $this->id]);
 
         //Product images
         $sql = "UPDATE
@@ -124,20 +128,21 @@ class Products extends FlashMessage {
                     ";
 
         foreach ($this->images as $id => $image) {
-            
-            if(!empty($image)) {
-                $this->db->update($sql,[$image, $this->img_id[$id]]);
+
+            if (!empty($image)) {
+                $this->db->update($sql, [$image, $this->img_id[$id]]);
             }
         }
     }
 
-	/**
-	 * Show all products.
-	 * 
-	 * @return $result returns an array containing all of the result set rows
-	 * @author Ishaq Jound
-	 **/
-	public function showAllProducts($category_id = null, $from_record_num= null, $records_per_page= null) {
+    /**
+     * Show all products.
+     *
+     * @return $result returns an array containing all of the result set rows
+     * @author Ishaq Jound
+     **/
+    public function showAllProducts($category_id = null, $from_record_num = null, $records_per_page = null)
+    {
         $catId = htmlspecialchars(strip_tags($category_id));
         $query = "SELECT 
                     id,name,description,price,created_at,category_id 
@@ -148,7 +153,7 @@ class Products extends FlashMessage {
                   LIMIT 
                     {$from_record_num}, {$records_per_page}";
 
-        if(!is_null($category_id)){
+        if (!is_null($category_id)) {
             $query = "SELECT 
                         id,name,description,price,created_at,category_id 
                       FROM  
@@ -160,12 +165,13 @@ class Products extends FlashMessage {
                       LIMIT 
                         {$from_record_num}, {$records_per_page}";
         }
-        
-        $result = $this->db->query($query,[$catId]);
-		return $result;
-	}
 
-    public function getProduct() {
+        $result = $this->db->query($query, [$catId]);
+        return $result;
+    }
+
+    public function getProduct()
+    {
         $sql = "SELECT 
                   name,description,price,created_at,category_id
                 FROM 
@@ -174,10 +180,10 @@ class Products extends FlashMessage {
                   id =?";
 
         // PRODUCT INFO
-        $product = $this->db->fetch($sql,[$this->id]);
-        $this->name =  $product->name;
+        $product = $this->db->fetch($sql, [$this->id]);
+        $this->name = $product->name;
         $this->description = $product->description;
-        $this->price =  $product->price;
+        $this->price = $product->price;
         $this->category_id = $product->category_id;
         $this->created_at = $product->created_at;
 
@@ -192,22 +198,22 @@ class Products extends FlashMessage {
                   p.id = i.product_id 
                 WHERE p.id = ?";
 
-        $images = $this->db->query($sql,[$this->id]);
+        $images = $this->db->query($sql, [$this->id]);
         foreach ($images as $image) {
             $this->images[] = $image;
         }
     }
 
-    
-    public function productRowCount($category_id = null) {
+
+    public function productRowCount($category_id = null)
+    {
         $catId = htmlspecialchars(strip_tags($category_id));
         $query = "SELECT 
                     id 
                   FROM 
                     {$this->product_table}";
-        
-        if(!is_null($category_id))
-        {
+
+        if (!is_null($category_id)) {
             $query = "SELECT 
                         id 
                       FROM 
@@ -216,12 +222,13 @@ class Products extends FlashMessage {
                         category_id = ?
                     ";
         }
-        
-        $result = $this->db->rowCount($query,[$catId]);
+
+        $result = $this->db->rowCount($query, [$catId]);
         return $result;
     }
 
-    public function searchProduct() {
+    public function searchProduct()
+    {
         $sql = "SELECT 
                   p.id, p.name, p.description, p.price, p.created_at, c.cat_name, c.id AS cat_id
                 FROM 
@@ -233,19 +240,19 @@ class Products extends FlashMessage {
                 WHERE 
                   p.name LIKE ?";
 
-        $product = $this->db->query($sql,["%".$this->name."%"]);
+        $product = $this->db->query($sql, ["%" . $this->name . "%"]);
 
 
-        if(!is_null($product)) {
+        if (!is_null($product)) {
             foreach ($product as $item) {
-               $this->searchedProducts[] = [
-                   "id" => $item->id,
-                   "name" => $item->name,
-                   "description" => $item->description,
-                   "price" =>  $item->price,
-                   "cat_name" => $item->cat_name,
-                   "category_id" => $item->cat_id,
-                   "created_at" => $item->created_at ];
+                $this->searchedProducts[] = [
+                    "id" => $item->id,
+                    "name" => $item->name,
+                    "description" => $item->description,
+                    "price" => $item->price,
+                    "cat_name" => $item->cat_name,
+                    "category_id" => $item->cat_id,
+                    "created_at" => $item->created_at];
             }
         }
 
@@ -259,14 +266,16 @@ class Products extends FlashMessage {
     {
         return $this->searchedProducts;
     }
-    
-    public function getTimestamp() {
+
+    public function getTimestamp()
+    {
         date_default_timezone_set('Europe/Stockholm');
         $this->created_at = date('Y-m-d H:i:s');
         $this->updated_at = date('Y-m-d H:i:s');
     }
 
-    public function stock() {
+    public function stock()
+    {
         $sql = "SELECT 
                   id,stock
                 FROM 
@@ -274,12 +283,13 @@ class Products extends FlashMessage {
                 WHERE 
                   product_id =?";
 
-        $stock = $this->db->fetch($sql,[$this->id]);
+        $stock = $this->db->fetch($sql, [$this->id]);
         $this->setStock($stock->stock);
         $this->setStockId($stock->id);
     }
 
-    public function fetchImage() {
+    public function fetchImage()
+    {
         $sql = "SELECT 
                   image,id
                 FROM 
@@ -287,7 +297,7 @@ class Products extends FlashMessage {
                 WHERE 
                   product_id =?";
 
-        $result = $this->db->fetch($sql,[$this->id]);
+        $result = $this->db->fetch($sql, [$this->id]);
         return $result;
     }
 
@@ -412,7 +422,6 @@ class Products extends FlashMessage {
     }
 
 
-    
     /**
      * @return mixed
      */
@@ -436,7 +445,6 @@ class Products extends FlashMessage {
     {
         $this->img_id = $img_id;
     }
-
 
 
 } // END class

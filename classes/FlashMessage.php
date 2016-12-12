@@ -4,17 +4,18 @@ class FlashMessage
 {
     /**
      * Flash Message Class
-     * 
+     *
      **/
 
     /**
      * Function for adding flash message.
-     * 
-     * @param string $message   message to add.
-     * @param string $type      type of message.
+     *
+     * @param string $message message to add.
+     * @param string $type type of message.
      */
-    private function addMessage($message, $type) {
-        if(isset($_SESSION['flashmessages'])){
+    private function addMessage($message, $type)
+    {
+        if (isset($_SESSION['flashmessages'])) {
             $flashMessages = $_SESSION['flashmessages'];
         }
         $flashMessage = [
@@ -27,28 +28,31 @@ class FlashMessage
 
     /**
      * Function for error message
-     * 
+     *
      * @param string $message message.
      */
-    public function addError($message) {
+    public function addError($message)
+    {
         $this->addMessage($message, 'alert alert-danger');
     }
 
     /**
      * Function for success message.
-     * 
+     *
      * @param string $message message.
      */
-    public function addSuccess($message) {
+    public function addSuccess($message)
+    {
         $this->addMessage($message, 'alert alert-success');
     }
 
 
-     /**
+    /**
      * Function for deleting message
-     * 
+     *
      */
-    private function deleteMessages() {
+    private function deleteMessages()
+    {
         unset($_SESSION['flashmessages']);
     }
 
@@ -57,12 +61,13 @@ class FlashMessage
      *
      * @return $html
      */
-    public function getFlashMessages() {
-        if(isset($_SESSION['flashmessages'])){
+    public function getFlashMessages()
+    {
+        if (isset($_SESSION['flashmessages'])) {
             $messages = $_SESSION['flashmessages'];
             $html = "";
             foreach ($messages as $message) {
-                $html .= "<div class='" . $message['type'] . "'>"  . $message['message'] . "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a></div>";
+                $html .= "<div class='" . $message['type'] . "'>" . $message['message'] . "<a href=\"#\" class=\"close\" data-dismiss=\"alert\" aria-label=\"close\">&times;</a></div>";
             }
             $this->deleteMessages();
             return $html;
