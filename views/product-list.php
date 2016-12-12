@@ -1,5 +1,4 @@
 <?php
-
 // Display all products
 if (!empty($showAllProducts)) : ?>
     <div class="row">
@@ -46,11 +45,11 @@ if (!empty($showAllProducts)) : ?>
                 <?php if ($page > 1) : ?>
                     <?php if (!empty($category_id)) : ?>
                         <li><a href='<?= $page_url ?>?id=<?= $category_id ?>?page=1' title='Gå till första sidan.'>
-                                Första sidan
+                                Första sida
                             </a></li>
                     <?php else: ?>
                         <li><a href='<?= $page_url ?>' title='Gå till första sidan.'>
-                                Förstan
+                                Första sida
                             </a></li>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -70,10 +69,10 @@ if (!empty($showAllProducts)) : ?>
                 <?php if ($page < $total_pages) : ?>
                     <?php if (isset($category_id) && !empty($category_id)) : ?>
                         <li><a href='<?= $page_url ?>?id=<?= $category_id ?>&page=<?= $total_pages ?>'
-                               title='Last page is <?= $total_pages ?>.'>Sista sidan</a></li>
+                               title='Last page is <?= $total_pages ?>.'>Sista sida</a></li>
                     <?php else: ?>
                         <li><a href='<?= $page_url ?>?page=<?= $total_pages ?>'
-                               title='sista sidan är <?= $total_pages ?>.'>Sista sidan</a></li>
+                               title='sista sidan är <?= $total_pages ?>.'>Sista sida</a></li>
                     <?php endif; ?>
                 <?php endif; ?>
             </ul>
